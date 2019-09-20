@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Lucas.Models;
+using Lucas.Data;
+using Lucas.Data.Domain.Users;
 
 namespace Lucas.Controllers
 {
@@ -13,25 +11,33 @@ namespace Lucas.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly LucasContext _context;
+        //private readonly LucasContext _context;
+        //private readonly IRepository _repository;
 
-        public UsersController(LucasContext context)
+        private readonly IUserRepository _itemRepository;
+
+        public UsersController(
+            // LucasContext context,
+            IUserRepository userRepository)
         {
-            _context = context;
+            _itemRepository = userRepository;
         }
 
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUser()
         {
-            return await _context.User.ToListAsync();
+            //await _context.User.ToListAsync()
+            var users = await _itemRepository.FindAll<User>();
+            return users;
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            var user = await _context.User.FindAsync(id);
+            //var user = await _context.User.FindAsync(id);
+            var user = await _itemRepository.FindById<User>(id);
 
             if (user == null)
             {
@@ -41,65 +47,65 @@ namespace Lucas.Controllers
             return user;
         }
 
-        // PUT: api/Users/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
-        {
-            if (id != user.UserId)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/Users/5
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutUser(int id, User user)
+        //{
+        //    if (id != user.UserId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(user).State = EntityState.Modified;
+        //    _context.Entry(user).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!UserExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        // POST: api/Users
-        [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
-        {
-            _context.User.Add(user);
-            await _context.SaveChangesAsync();
+        //// POST: api/Users
+        //[HttpPost]
+        //public async Task<ActionResult<User>> PostUser(User user)
+        //{
+        //    _context.User.Add(user);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
-        }
+        //    return CreatedAtAction("GetUser", new { id = user.UserId }, user);
+        //}
 
-        // DELETE: api/Users/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> DeleteUser(int id)
-        {
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/Users/5
+        //[HttpDelete("{id}")]
+        //public async Task<ActionResult<User>> DeleteUser(int id)
+        //{
+        //    var user = await _context.User.FindAsync(id);
+        //    if (user == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.User.Remove(user);
-            await _context.SaveChangesAsync();
+        //    _context.User.Remove(user);
+        //    await _context.SaveChangesAsync();
 
-            return user;
-        }
+        //    return user;
+        //}
 
-        private bool UserExists(int id)
-        {
-            return _context.User.Any(e => e.UserId == id);
-        }
+        //private bool UserExists(int id)
+        //{
+        //    return _context.User.Any(e => e.UserId == id);
+        //}
     }
 }

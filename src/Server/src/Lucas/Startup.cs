@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using Lucas.Models;
+using Lucas.Data;
+using Lucas.Data.Domain.Users;
+using Lucas.Models.Persistence.Users;
 
 namespace Lucas
 {
@@ -27,8 +23,11 @@ namespace Lucas
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             var connection = @"server=DESKTOP-EK0IL6Q\SQLEXPRESS; database=Lucas;user id=sa;password=RoseJ; Integrated Security=true; MultipleActiveResultSets=True;";
             services.AddDbContext<LucasContext>(options => options.UseSqlServer(connection));
+            services.AddScoped<IRepository, Repository<LucasContext>>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -49,4 +48,5 @@ namespace Lucas
             app.UseMvc();
         }
     }
+
 }
