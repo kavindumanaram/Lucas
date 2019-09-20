@@ -1,2 +1,2 @@
 # Lucas
-dotnet core api project to act as backent to one of pet platform
+dotnet core api project to act as backend to one of pet platform
