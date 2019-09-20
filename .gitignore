@@ -1,0 +1,43 @@
+# Build Folders (you can keep bin if you'd like, to store dlls and pdbs)
+bin
+obj
+Debug
+Release
+.vs/
+
+# mstest test results
+
+deploy
+deploy/*
+_ReSharper.*
+*.csproj.user
+*.resharper.user
+*.resharper
+*.suo
+*.cache
+StyleCop.Cache
+Thumbs.db
+~$*
+*.log
+bower_components
+node_modules
+typings
+bower_components/*
+node_modules/*
+typings/*
+npm-debug.log.*
+*.sqlsuo
+*.orig
+*.sqlsuo
+packages
+
+
+
+#PyCharm Projects
+*.pyc
+.idea/
+
+Logs
+Logs/*
+src/Services/SFDC/src/.vs/config/applicationhost.config
+
