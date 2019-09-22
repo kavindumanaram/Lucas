@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Lucas.Domain.Pets;
+using System;
 using System.Collections.Generic;
 
-namespace Lucas.Models
+namespace Lucas.Domain.Users
 {
     public partial class User
     {

@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Lucas.Models;
-using Lucas.Data;
-using Lucas.Data.Domain.Users;
+using Lucas.Domain.Users;
+using Lucas.Application.Users;
 
 namespace Lucas.Controllers
 {
@@ -11,41 +10,36 @@ namespace Lucas.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        //private readonly LucasContext _context;
-        //private readonly IRepository _repository;
-
-        private readonly IUserRepository _itemRepository;
+        private readonly IUserService _userService;
 
         public UsersController(
-            // LucasContext context,
-            IUserRepository userRepository)
+            IUserService userService)
         {
-            _itemRepository = userRepository;
+            _userService = userService;
         }
 
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUser()
         {
-            //await _context.User.ToListAsync()
-            var users = await _itemRepository.FindAll<User>();
+            var users = await _userService.GetUser();
             return users;
         }
 
-        // GET: api/Users/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
-        {
-            //var user = await _context.User.FindAsync(id);
-            var user = await _itemRepository.FindById<User>(id);
+        //// GET: api/Users/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<User>> GetUser(int id)
+        //{
+        //    //var user = await _context.User.FindAsync(id);
+        //    var user = await _itemRepository.FindById<User>(id);
 
-            if (user == null)
-            {
-                return NotFound();
-            }
+        //    if (user == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return user;
-        }
+        //    return user;
+        //}
 
         //// PUT: api/Users/5
         //[HttpPut("{id}")]

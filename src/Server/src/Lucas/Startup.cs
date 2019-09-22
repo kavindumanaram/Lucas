@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Lucas.Models;
-using Lucas.Data;
-using Lucas.Data.Domain.Users;
-using Lucas.Models.Persistence.Users;
+using Lucas.Persistence.Common;
+using Lucas.Persistence.Users;
+using Lucas.Application.Users;
+using Lucas.Domain.Users;
 
 namespace Lucas
 {
@@ -28,6 +28,7 @@ namespace Lucas
             services.AddDbContext<LucasContext>(options => options.UseSqlServer(connection));
             services.AddScoped<IRepository, Repository<LucasContext>>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService> ();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

@@ -1,8 +1,10 @@
 ﻿using System;
+using Lucas.Domain.Pets;
+using Lucas.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Lucas.Models
+namespace Lucas.Persistence.Common
 {
     public partial class LucasContext : DbContext
     {

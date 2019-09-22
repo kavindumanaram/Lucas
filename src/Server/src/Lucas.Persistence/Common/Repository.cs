@@ -1,11 +1,9 @@
-﻿using Lucas.Data;
+﻿using Lucas.Domain.Users;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace Lucas.Models
+namespace Lucas.Persistence.Common
 {
     public class Repository<LucasContext> : IRepository where LucasContext : DbContext
     {
@@ -49,5 +47,6 @@ namespace Lucas.Models
 
             _ = await this.dbContext.SaveChangesAsync();
         }
+
     }
 }
